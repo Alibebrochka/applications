@@ -2,7 +2,8 @@
 old="/home/alibebrochka/Downloads"
 books=$(find ~/ -type d -name 'books')
 music=$(find ~/ -type d -name 'music')
-Videos=$(find ~/ -type d -name 'Videos')
+videos=$(find ~/ -type d -name 'videos')
+appimages=$(find ~/ -type d -name 'appimages')
 rtorrent=$(find ~/.rtorrent -type d -name 'watch')
 for file in ~/Downloads/*; do
     if [ -f "$file" ]; then
@@ -20,7 +21,13 @@ for file in ~/Downloads/*; do
             ~/applications/rep_elem.sh $old *.mp3 $music
             ;;
         *.mp4)
-            ~/applications/rep_elem.sh $old *.mp4 $Videos
+            ~/applications/rep_elem.sh $old *.mp4 $videos
+            ;;
+        *.appimage)
+            ~/applications/rep_elem.sh $old *.appimage $appimages
+            ;;
+        *.AppImage)
+            ~/applications/rep_elem.sh $old *.AppImage $appimages
             ;;
         *.torrent)
             ~/applications/rep_elem.sh $old *.torrent $rtorrent
