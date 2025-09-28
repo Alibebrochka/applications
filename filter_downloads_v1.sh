@@ -6,9 +6,14 @@ videos=$(find ~/ -type d -name 'videos')
 appimages=$(find ~/ -type d -name 'appimages')
 rtorrent=$(find ~/.rtorrent -type d -name 'watch')
 
+rm_pd_rm() {
+    process_directory "$1" && rm -r "$2"
+    rm "$1"
+}
+
 process_directory() {
     for file in "$1"/*; do
-        echo "$file"
+        #echo "$file"
         if [ -d "$file" ]; then
             process_directory "$file"
         fi
@@ -38,10 +43,12 @@ process_directory() {
             *.torrent)
                 ~/applications/rep_elem.sh "$1" *.torrent "$rtorrent"
                 ;;
-                #*.rar)
-                #    unrar x $file
-                #    rm -r $file
-                #    ;;
+            *.rar)
+                unrar x -v "$file" "$1" && rm_pd_rm "${file%.rar}" "$file"
+                ;;
+            *.7z)
+                7z x "$file" -aoa -bsp1 -o"$1" && rm_pd_rm "${file%.7z}" "$file"
+                ;;
             *) ;;
             esac
         fi
