@@ -1,13 +1,13 @@
 #!/bin/bash
 
-books=$(find ~/ -type d -name 'books')
-music=$(find ~/ -type d -name 'music')
-Pictures=$(find ~/ -type d -name 'Pictures')
-videos=$(find ~/ -type d -name 'videos')
-appimages=$(find ~/ -type d -name 'appimages')
+books=$(find ~/ -maxdepth 2 -type d -name 'books')
+music=$(find ~/ -maxdepth 2 -type d -name 'music')
+Pictures=$(find ~/ -maxdepth 2 -type d -name 'Pictures')
+videos=$(find ~/ -maxdepth 2 -type d -name 'videos')
+appimages=$(find ~/ -maxdepth 2 -type d -name 'appimages')
 rtorrent=$(find ~/.rtorrent -type d -name 'watch')
 
-rm_pd_rm() {
+pd_rm_rm() {
     process_directory "$1" && rm -r "$2"
     rm "$1"
 }
@@ -48,10 +48,10 @@ process_directory() {
                 ~/applications/rep_elem.sh "$1" *.torrent "$rtorrent"
                 ;;
             *.rar)
-                unrar x -v "$file" "$1" && rm_pd_rm "${file%.rar}" "$file"
+                unrar x -v "$file" "$1" && pd_rm_rm "${file%.rar}" "$file"
                 ;;
             *.7z)
-                7z x "$file" -aoa -bsp1 -o"$1" && rm_pd_rm "${file%.7z}" "$file"
+                7z x "$file" -aoa -bsp1 -o"$1" && pd_rm_rm "${file%.7z}" "$file"
                 ;;
             *) ;;
             esac
