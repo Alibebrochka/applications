@@ -2,6 +2,7 @@
 
 books=$(find ~/ -type d -name 'books')
 music=$(find ~/ -type d -name 'music')
+Pictures=$(find ~/ -type d -name 'Pictures')
 videos=$(find ~/ -type d -name 'videos')
 appimages=$(find ~/ -type d -name 'appimages')
 rtorrent=$(find ~/.rtorrent -type d -name 'watch')
@@ -21,6 +22,9 @@ process_directory() {
             case "$file" in
             *.pdf)
                 ~/applications/rep_elem.sh "$1" *.pdf "$books"
+                ;;
+            *.jpg)
+                ~/applications/rep_elem.sh "$1" *.jpg "$Pictures"
                 ;;
             *.fb2)
                 ~/applications/rep_elem.sh "$1" *.fb2 "$books"
