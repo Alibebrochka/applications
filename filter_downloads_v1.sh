@@ -13,39 +13,40 @@ pd_rm_rm() {
 }
 
 process_directory() {
+    echo "inside the $1"
     for file in "$1"/*; do
-        #echo "$file"
+        echo "$file"
         if [ -d "$file" ]; then
             process_directory "$file"
         fi
         if [ -f "$file" ]; then
             case "$file" in
             *.pdf)
-                ~/applications/rep_elem.sh "$1" *.pdf "$books"
+                ~/applications/moveficon.sh "$file" "$books"
                 ;;
             *.jpg)
-                ~/applications/rep_elem.sh "$1" *.jpg "$Pictures"
+                ~/applications/moveficon.sh "$file" "$Pictures"
                 ;;
             *.fb2)
-                ~/applications/rep_elem.sh "$1" *.fb2 "$books"
+                ~/applications/moveficon.sh "$file" "$books"
                 ;;
             *.fb2.zip)
-                ~/applications/rep_elem.sh "$1" *.fb2.zip "$books"
+                ~/applications/moveficon.sh "$file" "$books"
                 ;;
             *.mp3)
-                ~/applications/rep_elem.sh "$1" *.mp3 "$music"
+                ~/applications/moveficon.sh "$file" "$music"
                 ;;
             *.mp4)
-                ~/applications/rep_elem.sh "$1" *.mp4 "$videos"
+                ~/applications/moveficon.sh "$file" "$videos"
                 ;;
             *.appimage)
-                ~/applications/rep_elem.sh "$1" *.appimage "$appimages"
+                ~/applications/moveficon.sh "$file" "$appimage"
                 ;;
             *.AppImage)
-                ~/applications/rep_elem.sh "$1" *.AppImage "$appimages"
+                ~/applications/moveficon.sh "$file" "$appimage"
                 ;;
             *.torrent)
-                ~/applications/rep_elem.sh "$1" *.torrent "$rtorrent"
+                ~/applications/moveficon.sh "$file" "$rtorrent"
                 ;;
             *.rar)
                 unrar x -v "$file" "$1" && pd_rm_rm "${file%.rar}" "$file"
