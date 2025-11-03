@@ -54,11 +54,14 @@ process_directory() {
             *.7z)
                 7z x "$file" -aoa -bsp1 -o"$1" && pd_rm_rm "${file%.7z}" "$file"
                 ;;
+            *.zip)
+                unzip "$file" -d "$1" && pd_rm_rm "${file%.zip}" "$file"
+                ;;
             *) ;;
             esac
         fi
     done
 }
 
-old="/home/alibebrochka/Downloads"
+old=$(find ~/ -maxdepth 2 -type d -name 'Downloads')
 process_directory "$old"
