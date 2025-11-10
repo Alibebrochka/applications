@@ -47,13 +47,13 @@ process_directory() {
                 ~/applications/moveficon.sh "$file" "$rtorrent"
                 ;;
             *.rar)
-                unrar x -v "$file" "$1/tmp_dir"
+                unrar x -v "$file" "$1/tmp_dir" && rm -rf "$file"
                 ;;
             *.7z)
-                7z x "$file" -aoa -bsp1 -o"$1/tmp_dir"
+                7z x "$file" -aoa -bsp1 -o"$1/tmp_dir" && rm -rf "$file"
                 ;;
             *.zip)
-                runzip "$file" && unzip "$file" -d "$1/tmp_dir"
+                runzip "$file" && unzip "$file" -d "$1/tmp_dir" && rm -rf "$file"
                 ;;
             *) ;;
             esac
