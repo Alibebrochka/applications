@@ -7,11 +7,6 @@ videos=$(find ~/ -maxdepth 2 -type d -name 'videos')
 appimages=$(find ~/ -maxdepth 2 -type d -name 'appimages')
 rtorrent=$(find ~/.rtorrent -type d -name 'watch')
 
-pd_rm_rm() {
-    process_directory "$1" && rm -r "$2"
-    rm "$1"
-}
-
 process_directory() {
     echo "inside the $1"
     for file in "$1"/*; do
@@ -39,6 +34,9 @@ process_directory() {
             *.mp4)
                 ~/applications/moveficon.sh "$file" "$videos"
                 ;;
+            *.m4a)
+                ~/applications/moveficon.sh "$file" "$music"
+                ;;
             *.appimage)
                 ~/applications/moveficon.sh "$file" "$appimage"
                 ;;
@@ -49,13 +47,13 @@ process_directory() {
                 ~/applications/moveficon.sh "$file" "$rtorrent"
                 ;;
             *.rar)
-                unrar x -v "$file" "$1" && pd_rm_rm "${file%.rar}" "$file"
+                unrar x -v "$file" "$1/tmp_dir"
                 ;;
             *.7z)
-                7z x "$file" -aoa -bsp1 -o"$1" && pd_rm_rm "${file%.7z}" "$file"
+                7z x "$file" -aoa -bsp1 -o"$1/tmp_dir"
                 ;;
             *.zip)
-                unzip "$file" -d "$1" && pd_rm_rm "${file%.zip}" "$file"
+                runzip "$file" && unzip "$file" -d "$1/tmp_dir"
                 ;;
             *) ;;
             esac
@@ -64,4 +62,6 @@ process_directory() {
 }
 
 old=$(find ~/ -maxdepth 2 -type d -name 'Downloads')
+mkdir -p "$old/tmp_dir"
 process_directory "$old"
+process_directory "$old/tmp_dir"
